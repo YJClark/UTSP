@@ -1,7 +1,7 @@
 import torch
 import numpy as np
 
-def GCN_diffusion(W,order,feature,device='cuda'):
+def GCN_diffusion(W,order,feature,device='cuda' if torch.cuda.is_available() else 'cpu'):
     """
     W: [batchsize,n,n]
     feature: [batchsize,n,n]

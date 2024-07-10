@@ -1,7 +1,7 @@
 import numpy as np
 import torch
 
-def TSPLoss(SctOutput,distance_matrix,num_of_nodes,device = 'cuda'):
+def TSPLoss(SctOutput,distance_matrix,num_of_nodes,device = 'cuda' if torch.cuda.is_available() else "cpu"):
     '''
     input:
     SctOutput: batchsize * num_of_nodes * num_of_nodes tensor
@@ -12,7 +12,7 @@ def TSPLoss(SctOutput,distance_matrix,num_of_nodes,device = 'cuda'):
     weighted_path = weighted_path.sum(dim=(1,2))
     return weighted_path, HeatM
 
-def get_heat_map(SctOutput,num_of_nodes,device = 'cuda'):
+def get_heat_map(SctOutput,num_of_nodes,device = 'cuda' if torch.cuda.is_available() else "cpu"):
     '''
     input:
     SctOutput: batchsize * num_of_nodes * num_of_nodes tensor

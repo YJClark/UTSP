@@ -40,7 +40,7 @@ parser.add_argument('--diag_penalty', type=float, default=3.,
                     help='penalty on the diag')
 parser.add_argument('--rescale', type=float, default=1.,
                     help='rescale for xy plane')
-parser.add_argument('--device', type=str, default='cuda',
+parser.add_argument('--device', type=str, default="cuda" if torch.cuda.is_available() else "cpu",
                     help='Device')
 args = parser.parse_args()
 torch.backends.cudnn.deterministic = True
@@ -152,7 +152,9 @@ def test(loader,topk = 20):
 
 #TSP200
 model_name = 'Saved_Models/TSP_%d/scatgnn_layer_%d_hid_%d_model_210_temp_3.500.pth'%(args.num_of_nodes,args.nlayers,args.hidden)# topk = 10
-model.load_state_dict(torch.load(model_name))
+#model.load_state_dict(torch.load(model_name))
+model.load_state_dict(torch.load(model_name, map_location=torch.device('cpu')))
+
 #Saved_indices,Saved_Values,Saved_sol,Saved_pos = test(test_loader,topk = 8) # epoch=20>10 
 Saved_indices,Saved_Values,Saved_sol,Saved_pos = test(test_loader,topk = args.topk) # epoch=20>10
 

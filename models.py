@@ -14,7 +14,7 @@ class SCTConv(torch.nn.Module):
         self.linear2 = nn.Linear(hidden_dim, hidden_dim)
         self.a = nn.Parameter(torch.zeros(size=(2 * hidden_dim, 1)))
 
-    def forward(self, X, adj, moment=1, device='cuda'):
+    def forward(self, X, adj, moment=1, device='cuda' if torch.cuda.is_available() else "cpu"):
         """
         Params
         ------
@@ -77,7 +77,7 @@ class GNN(nn.Module):
         self.bn1 = nn.BatchNorm1d(hidden_dim)
         self.m = nn.Softmax(dim=1)
 
-    def forward(self, X, adj, moment=1, device='cuda'):
+    def forward(self, X, adj, moment=1, device='cuda' if torch.cuda.is_available() else "cpu"):
         X = self.in_proj(X)
         hidden_states = X
         for layer in self.convs:
