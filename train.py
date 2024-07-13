@@ -71,6 +71,7 @@ def count_parameters(model):
 print('Total number of parameters:')
 print(count_parameters(model))
 
+#generate D matrix
 def coord_to_adj(coord_arr):
     dis_mat = distance_matrix(coord_arr, coord_arr)
     return dis_mat
